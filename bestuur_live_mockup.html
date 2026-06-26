@@ -1,0 +1,227 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.navbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; border-bottom: 0.5px solid var(--border); background: var(--surface-2); }
+.nav-logo { display: flex; align-items: center; gap: 8px; }
+.logo-badge { background: #3C3489; color: #CECBF6; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.5px; }
+.nav-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.nav-links { display: flex; gap: 20px; }
+.nav-link { font-size: 13px; color: var(--text-secondary); cursor: pointer; }
+.nav-link.active { color: var(--text-accent); border-bottom: 1.5px solid var(--border-accent); padding-bottom: 2px; }
+.hero { background: var(--surface-1); padding: 28px 24px 20px; border-bottom: 0.5px solid var(--border); }
+.hero-tag { display: inline-flex; align-items: center; gap: 6px; background: #EEEDFE; color: #3C3489; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; }
+.hero h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+.hero p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-width: 540px; }
+.search-bar { display: flex; align-items: center; gap: 8px; margin-top: 16px; background: var(--surface-2); border: 0.5px solid var(--border-strong); border-radius: var(--radius); padding: 8px 14px; max-width: 480px; }
+.search-bar i { color: var(--text-muted); font-size: 16px; }
+.search-bar span { font-size: 13px; color: var(--text-muted); }
+.filter-row { display: flex; gap: 8px; margin-top: 10px; }
+.filter-chip { font-size: 11px; padding: 4px 12px; border-radius: 20px; border: 0.5px solid var(--border-strong); color: var(--text-secondary); cursor: pointer; background: var(--surface-2); }
+.filter-chip.on { background: #EEEDFE; color: #534AB7; border-color: #AFA9EC; }
+.main { display: grid; grid-template-columns: 260px 1fr; gap: 0; min-height: 440px; }
+.sidebar { border-right: 0.5px solid var(--border); padding: 16px; background: var(--surface-1); }
+.sidebar-section { margin-bottom: 20px; }
+.sidebar-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+.koleksi-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-radius: var(--radius); cursor: pointer; border: 0.5px solid transparent; margin-bottom: 6px; }
+.koleksi-item.active { background: #EEEDFE; border-color: #AFA9EC; }
+.koleksi-item:not(.active):hover { background: var(--surface-0); }
+.koleksi-thumb { width: 36px; height: 44px; border-radius: 4px; background: #D3D1C7; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #5F5E5A; overflow: hidden; border: 0.5px solid var(--border); }
+.koleksi-thumb.highlight { background: #CECBF6; }
+.koleksi-info { flex: 1; min-width: 0; }
+.koleksi-title { font-size: 12px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.koleksi-meta { font-size: 11px; color: var(--text-muted); }
+.kondisi-badge { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-top: 3px; }
+.kondisi-rapuh { background: #FAECE7; color: #993C1D; }
+.kondisi-baik { background: #EAF3DE; color: #3B6D11; }
+.reader-area { padding: 20px 24px; background: var(--surface-2); }
+.reader-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.reader-breadcrumb { font-size: 12px; color: var(--text-muted); }
+.reader-breadcrumb span { color: var(--text-primary); font-weight: 500; }
+.mode-tabs { display: flex; gap: 4px; background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 3px; }
+.mode-tab { font-size: 12px; padding: 5px 12px; border-radius: 5px; cursor: pointer; color: var(--text-secondary); }
+.mode-tab.active { background: var(--surface-2); color: #534AB7; font-weight: 500; border: 0.5px solid #AFA9EC; }
+.reader-content { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.page-panel { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+.page-panel-header { padding: 8px 12px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--surface-1); }
+.page-panel-label { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+.page-panel-body { padding: 12px; min-height: 200px; }
+.scan-lines { }
+.scan-line { height: 9px; border-radius: 2px; background: var(--surface-0); margin-bottom: 5px; }
+.scan-line.w100 { width: 100%; }
+.scan-line.w85 { width: 85%; }
+.scan-line.w92 { width: 92%; }
+.scan-line.w70 { width: 70%; }
+.scan-line.w78 { width: 78%; }
+.scan-line.faded { opacity: 0.5; }
+.scan-gap { height: 14px; }
+.terjemahan-text { font-size: 12px; color: var(--text-primary); line-height: 1.7; }
+.terjemahan-text .highlight-word { background: #EEEDFE; color: #3C3489; border-radius: 3px; padding: 0 3px; cursor: pointer; }
+.tooltip-bubble { display: inline-block; background: #EEEDFE; border: 0.5px solid #AFA9EC; border-radius: 8px; padding: 8px 10px; margin-top: 8px; font-size: 11px; color: #3C3489; line-height: 1.5; }
+.tooltip-bubble i { font-size: 13px; vertical-align: -2px; margin-right: 4px; }
+.info-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.info-card { background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 12px; }
+.info-card-label { font-size: 10px; color: var(--text-muted); margin-bottom: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4px; }
+.info-card-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+.action-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 7px 14px; border-radius: var(--radius); cursor: pointer; border: 0.5px solid var(--border-strong); background: var(--surface-2); color: var(--text-primary); }
+.btn-primary { background: #534AB7; color: #EEEDFE; border-color: #534AB7; }
+.btn i { font-size: 14px; }
+.preserve-badge { display: inline-flex; align-items: center; gap: 4px; background: #EAF3DE; color: #27500A; font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 0.5px solid #C0DD97; margin-left: auto; }
+</style>
+
+<h2 class="sr-only">Mockup tampilan website BESTUUR LIVE — platform baca arsip buku kuno interaktif</h2>
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; font-family: var(--font-sans);">
+
+  <div class="navbar">
+    <div class="nav-logo">
+      <div class="logo-badge">BESTUUR LIVE</div>
+      <span class="nav-title">Arsip Kolonial Jawa Timur</span>
+    </div>
+    <div class="nav-links">
+      <span class="nav-link active">Koleksi</span>
+      <span class="nav-link">Tentang</span>
+      <span class="nav-link">Panduan</span>
+      <span class="nav-link"><i class="ti ti-user" aria-hidden="true"></i></span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-tag"><i class="ti ti-book-2" aria-hidden="true" style="font-size:13px;"></i> Koleksi buku kuno era Hindia Belanda</div>
+    <h1>Jelajahi arsip sejarah Jawa Timur</h1>
+    <p>Akses, baca, dan pahami buku-buku kuno berbahasa Belanda dalam Bahasa Indonesia — tanpa menyentuh koleksi asli.</p>
+    <div class="search-bar">
+      <i class="ti ti-search" aria-hidden="true"></i>
+      <span>Cari judul, tahun, topik, atau kata kunci...</span>
+    </div>
+    <div class="filter-row">
+      <div class="filter-chip on">Semua koleksi</div>
+      <div class="filter-chip">Era 1800–1900</div>
+      <div class="filter-chip">Era 1900–1942</div>
+      <div class="filter-chip">Pemerintahan</div>
+      <div class="filter-chip">Geografi</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Koleksi dipilih</div>
+        <div class="koleksi-item active">
+          <div class="koleksi-thumb highlight" style="font-size:8px; text-align:center; padding:4px; line-height:1.3; color:#534AB7;">Binnen<br>landsch</div>
+          <div class="koleksi-info">
+            <div class="koleksi-title">Binnenlandsch Bestuur</div>
+            <div class="koleksi-meta">1892 · Belanda · 312 hal.</div>
+            <div class="kondisi-badge kondisi-rapuh">Rapuh</div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Koleksi lain</div>
+        <div class="koleksi-item">
+          <div class="koleksi-thumb"></div>
+          <div class="koleksi-info">
+            <div class="koleksi-title">Regeeringsalmanak</div>
+            <div class="koleksi-meta">1905 · Belanda · 208 hal.</div>
+            <div class="kondisi-badge kondisi-baik">Baik</div>
+          </div>
+        </div>
+        <div class="koleksi-item">
+          <div class="koleksi-thumb"></div>
+          <div class="koleksi-info">
+            <div class="koleksi-title">Verslag der Residentie</div>
+            <div class="koleksi-meta">1918 · Belanda · 156 hal.</div>
+            <div class="kondisi-badge kondisi-rapuh">Rapuh</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reader-area">
+      <div class="reader-topbar">
+        <div class="reader-breadcrumb">Koleksi / <span>Binnenlandsch Bestuur</span> / Halaman 14</div>
+        <div class="mode-tabs">
+          <div class="mode-tab">Asli</div>
+          <div class="mode-tab active">Terjemahan</div>
+          <div class="mode-tab">Cerita</div>
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <div class="info-card">
+          <div class="info-card-label">Tahun terbit</div>
+          <div class="info-card-value">1892</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Bahasa asli</div>
+          <div class="info-card-value">Belanda</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Kondisi fisik</div>
+          <div class="info-card-value" style="color:#993C1D;">Rapuh</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Status digitalisasi</div>
+          <div class="info-card-value" style="color:#3B6D11;">Selesai</div>
+        </div>
+      </div>
+
+      <div class="reader-content">
+        <div class="page-panel">
+          <div class="page-panel-header">
+            <span class="page-panel-label"><i class="ti ti-file-text" aria-hidden="true" style="font-size:13px; vertical-align:-2px; margin-right:4px;"></i>Teks asli (Belanda)</span>
+            <span style="font-size:10px; color:var(--text-muted);">Hal. 14</span>
+          </div>
+          <div class="page-panel-body">
+            <div class="scan-lines">
+              <div class="scan-line w100"></div>
+              <div class="scan-line w92"></div>
+              <div class="scan-line w85"></div>
+              <div class="scan-line w100"></div>
+              <div class="scan-line w78 faded"></div>
+              <div class="scan-gap"></div>
+              <div class="scan-line w100"></div>
+              <div class="scan-line w70"></div>
+              <div class="scan-line w92"></div>
+              <div class="scan-line w85 faded"></div>
+              <div class="scan-gap"></div>
+              <div class="scan-line w78"></div>
+              <div class="scan-line w100"></div>
+              <div class="scan-line w92"></div>
+              <div class="scan-line w60" style="width:60%;"></div>
+            </div>
+            <div style="margin-top:10px; padding:8px; background:var(--surface-0); border-radius:6px; border:0.5px solid var(--border);">
+              <div style="font-size:10px; color:var(--text-muted); margin-bottom:4px; font-weight:500;">Teks terdeteksi (OCR)</div>
+              <div style="font-size:11px; color:var(--text-secondary); line-height:1.6; font-family:var(--font-mono);">De inlandsche bestuurder is verantwoordelijk voor de orde en rust in zijn district...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-panel">
+          <div class="page-panel-header">
+            <span class="page-panel-label"><i class="ti ti-language" aria-hidden="true" style="font-size:13px; vertical-align:-2px; margin-right:4px;"></i>Terjemahan (Indonesia)</span>
+            <span style="font-size:10px; color:#534AB7; font-weight:500;">AI · dikurasi sejarawan</span>
+          </div>
+          <div class="page-panel-body">
+            <div class="terjemahan-text">
+              <span class="highlight-word">Penguasa pribumi</span> bertanggung jawab atas ketertiban dan ketentraman di <span class="highlight-word">distriknya</span>. Ia wajib melaporkan setiap kejadian yang mengganggu keamanan kepada <span class="highlight-word">Residen</span> dalam waktu yang tidak boleh ditunda.
+              <div class="tooltip-bubble">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                <strong>Residen</strong> adalah pejabat kolonial Belanda yang mengawasi wilayah administrasi setingkat provinsi pada masa Hindia Belanda. Klik kata bergaris bawah untuk konteks historis.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn"><i class="ti ti-arrow-left" aria-hidden="true"></i> Halaman sebelumnya</button>
+        <button class="btn"><i class="ti ti-arrow-right" aria-hidden="true"></i> Halaman berikutnya</button>
+        <button class="btn"><i class="ti ti-download" aria-hidden="true"></i> Unduh + sitasi</button>
+        <button class="btn"><i class="ti ti-bookmark" aria-hidden="true"></i> Simpan</button>
+        <div class="preserve-badge"><i class="ti ti-shield-check" aria-hidden="true" style="font-size:13px;"></i> Koleksi fisik terlindungi</div>
+      </div>
+    </div>
+  </div>
+</div>
